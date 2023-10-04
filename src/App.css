@@ -1,38 +1,345 @@
-.App {
-  text-align: center;
+*{
+    margin:0;
+    padding: 0;
+    text-decoration: none;
+   
+}
+@font-face{
+    font-family: "VCRODOMono";
+    src: local("VCR_OSD_MONO"),
+        url("./fonts/VCR_OSD_MONO_1.001.ttf") format("truetype");
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.container1{
+    display: flex;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+main{
+    height: 100vh;
+    width: 100vw;
+    overflow-y: scroll;
+}
+.sidebar{
+    background: #D7D7D7;
+    color: #0D0D0D;
+    width: 200px;
+    transition: all 0.5s ease-in-out;
+    border-radius: 0 7px 7px 0;
+}
+.top_section{
+    display: flex;
+    align-items: center;
+    padding: 20px 15px;
+}
+.logo{
+    font-family: "VCRODOMono", monospace;
+    font-size: 25px;
+}
+.bars{
+    display: flex;
+    font-size: 25px;
+    margin-left: 50px;
+}
+.link{
+    font-family: "VCRODOMono", monospace;
+    display: flex; 
+    color:#0D0D0D;
+    padding: 10px 15px;
+    gap: 15px;
+    transition: all 0.5s ease-in-out;
+    text-decoration: none;
+}
+.link:hover{  
+    background-color:  #12312B;
+    color:#D7D7D7;
+    transition: all 0.5s;
+    border-radius: 7px;
+}
+.active{
+    background-color: #12312B;
+    color:#D7D7D7;
+    border-radius: 7px;
+}
+.icon, .link_text{
+ font-size: 20px;
+}
+/* Tables */
+.table-no-stripes{
+  border-collapse: separate;
+  border-spacing: 0 15px;
+}
+.table-no-stripes tbody tr:nth-child(odd) {
+    background-color: transparent; /* Remove background color for odd rows */
   }
+  
+  .table-no-stripes tbody tr:nth-child(even) {
+    background-color: transparent; /* Remove background color for even rows */
+  }
+tbody{
+    display: contents;
+}
+Table{
+  border-collapse: collapse !important ;
+}
+input {
+    font-size: 16px;
+    background-color: transparent;
+    border: none;
+    width: 91%;
+    padding: 10px 10px;
+    font-family: "VCRODOMono";
+  }
+select{
+    background-color: transparent;
+    padding: 10px 10px;
+}
+tr {
+    background-color: #f5f5f5; 
+    text-align: center;
+    align-items: center;
+    font-family: "VCRODOMono";
+  }
+  
+ 
+  tr:nth-child(even) {
+    background-color: #e0e0e0;
+  }
+  
+ 
+  th {
+    background-color: #333;
+    color: white; 
+    font-family: "VCRODOMono";
+  }
+  
+
+  td {
+    padding: 8px;
+    text-align: center;
+    font-family: "VCRODOMono";
+  }
+  
+
+  tfoot tr {
+    font-weight: bold; 
+  }
+.date-pagination{
+    display: flex;
+   
+    gap: 20px;
+    align-content: center;
+    justify-content: center;
+}
+/* edit forms */
+.edit-form{
+  display: flex;
+  align-items: stretch;
+}
+.modal-header-edit-form{
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column-reverse;
+}
+.action .dropdown-toggle, .dropdown-toggle.btn.btn-primary{
+  background-color: transparent;
+  border: none;
+  padding: 0px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Remove background color and border from dropdown items */
+.action .dropdown-menu {
+  background-color: #f5f5f5;
+  z-index: 1;
+}
+
+/* Remove hover and active states */
+.action .dropdown-item.active {
+  background-color: transparent;
+  
+}
+p{
+  font-family: "VCRODOMono";
+}
+/*Calendar*/
+.calendar-modal {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  margin-top: 50px;
+}
+
+.visible {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.custom-calendar {
+  max-width: 300px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+  font-family: Arial, sans-serif;
+  border: none;
+}
+
+/* Style the calendar navigation buttons */
+.react-calendar__navigation {
+  display: flex;
+  margin-top: 20px;
+  background-color: #f5f5f5;
+  border: none;
+}
+.react-calendar__navigation__label{
+  border: none;
+}
+/* Style the calendar navigation button icons */
+.react-calendar__navigation__arrow {
+  color: #333;
+  border: none;
+  font-size: 40px;
+  margin: 10px;
+}
+
+/* Style the calendar tile for the selected date */
+.react-calendar__tile--active {
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 10%;
+}
+
+/* Style the calendar tile for today's date */
+.react-calendar__tile--now {
+  background-color: #f0f0f0;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Style the calendar tile for weekdays */
+.react-calendar__tile--weekdays {
+  background-color: #f5f5f5;
+  color: red;
+  font-weight: bold;
+}
+
+
+/* Style the calendar tile for other dates */
+.react-calendar__tile {
+  border: none;
+  cursor: pointer;
+}
+
+/* Style the "Close" button */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #007bff;
+  font-size: 16px;
+}
+
+/*BALANCE*/
+.balance{
+  background-color: #BFBFBF;
+  color: #0D0D0D;
+  display: flex;
+  width: 400px;
+  height: 78px;
+  border-radius: 10px;
+}
+.balance-title{
+  padding-top: 10px;
+  font-size: 18px;
+  margin: 0px;
+}
+.current-balance-container{
+  padding-left: 20px;
+}
+.balance-amount{
+  font-size: 24px;
+}
+.budget{
+  display: flex;
+  justify-content: center;
+}
+
+/*Cards*/
+.cards{
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+  font-family: "VCRODOMono";
+}
+.card-items{
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+.category-name{
+  margin: 20px 20px 0 20px;
+}
+/*Bills*/
+.category1{ 
+  background-color: #003366; 
+  color: white; 
+}
+/*Food*/
+.category2 {
+  background-color: #66cc99;
+  color: white; 
+}
+/*E-Commerce*/
+.category3 {
+  background-color: #660099; 
+  color: white; 
+}
+/*Enterntainment*/
+.category4 {
+  background-color: #ff3300; 
+  color: white; 
+}
+/*Shop*/
+.category5 {
+  background-color: #ff9900; 
+  color: white; 
+}
+.edit-button{
+  background-color: transparent;
+  border: none;
+  margin-top: 10px;
+}
+.edit-button:hover{
+  background-color: transparent;
+  color: #0D0D0D;
+}
+.edit-button:active{
+  background-color: transparent !important;
+  
+}
+.budget-amount{
+  font-size: 42px;
+  text-align: center;
+  width: 100%;
 }

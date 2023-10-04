@@ -1,0 +1,164 @@
+@font-face{
+    font-family: "VCRODOMono";
+    src: local("VCR_OSD_MONO"),
+        url("../fonts/VCR_OSD_MONO_1.001.ttf") format("truetype");
+}
+.landing-description{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    margin-left: 100px;
+    margin-right: 100px;
+    height: 100vh;
+    gap: 100px;
+}
+.landing-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    gap: 100px;
+    background-color: #FEFEFE;
+}
+.title{
+    font-family: "VCRODOMono", monospace;
+    font-size: 55px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100px;
+}
+.app{
+    color: #05820A;
+    align-items: flex-end;
+}
+.title-description{
+    color: #000;
+    text-align: justify;
+    font-family: Roboto Condensed;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 100% */
+    letter-spacing: 0.24px;
+}
+.img{
+    height:514px;
+    width: 468px;
+}
+
+.register{
+    margin-left: 100px;
+    margin-right: 100px;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-container{
+    height: 831px;
+    width: 615px;
+    background-color: #12312B;
+    color: #FFFF;
+    border-radius: 30px 0 0 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.register-container{
+    height: 831px;
+    width: 615px;
+    background-color: #00693E;
+    color: #FFFF;
+    border-radius: 0 30px 30px 0;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    border:0; 
+    font-family: VCRODOMono;
+}
+form{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.login-description-container{
+    height: 739px;
+    width: 534px;
+    background-color: #00693E;
+    border-radius: 15px;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+.login-description{
+   margin: 50px;
+}
+.title-register, .register-title{
+    font-family: "VCRODOMono", monospace;
+    color: #FFF;
+    font-size: 55px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 169.656%; /* 93.311px */
+    text-transform: capitalize;
+}
+.login-content-container{
+    margin-top:200px;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+}
+.register-forms{
+    border-radius: 12px;
+    color: #000;
+    text-decoration: none;
+    width: 509.542px;
+    height: 70px;
+    border-radius: 12px;
+    padding-left: 50px; 
+    font-size: 24px;
+}
+.register-form-container{
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    gap: 50px;
+}
+.register-button{
+    background-color: #12312B;
+    border: 0;
+    width: 280px;
+    height: 61px;
+    font-size: 24px;
+}
+.login-link{
+    font-family: VCRODOMono;
+    font-size: 24px;
+    text-decoration: underline;
+    color: #FFFF;
+}
+.login-link:hover{
+    cursor: pointer;
+}
+h4{
+    font-family: VCRODOMono;
+    font-size: 16px;
+}
+.input-container {
+    position: relative;
+  }
+  
+  .input-icon {
+    position: absolute;
+    left: 10px; 
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.8rem; 
+    color: #12312B; 
+  }
