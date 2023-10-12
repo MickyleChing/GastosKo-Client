@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Table} from 'react-bootstrap';
+import { Table, Button} from 'react-bootstrap';
 import ExpenseTableRow from '../components/ExpenseTableRow';
 import AddExpense from '../components/AddExpense';
 import CreateExpense from '../components/CreateExpense';
@@ -8,7 +8,7 @@ import { FaCalendarDays } from "react-icons/fa6";
 import CalendarModal from '../components/CalendarModal';
 import Balance from '../components/Balance';
 
-const baseURL = "http://localhost:5050/api/users";
+const baseURL = "https://gastos-ko-server.vercel.app/api/users";
 
 const Today = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -21,7 +21,7 @@ const Today = () => {
   const [subcategories, setSubcategories] = useState([]);
   const [selectedSubcategory, setSelectedSubcategory] = useState({});
   const [currentBalance, setBalance] = useState(null);
-
+  
   const fetchBalance = async () => {
     try {
       const accessToken = localStorage.getItem("accessToken");
@@ -31,16 +31,19 @@ const Today = () => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      console.log(response.data);
       setBalance(response.data);
+      console.log( "Budget:", response.data);
     } catch (error) {
       console.error(error);
+      if (error.response && error.response.status === 404) {
+        // Handle the 404 error here, for example, set currentBalance to null
+        setBalance(null);
+      } else {
+        console.error('An error occurred while fetching the balance:', error);
+      }
     }
   };
-  
-  useEffect(() => {
-    fetchBalance();
-  }, []);
+
 
   const handleCalendarChange = (date) => {
     setCurrentDate(date);
@@ -168,7 +171,7 @@ const handleSaveClick = async (expenseId) => {
    
     // After successfully saving, fetch expenses again to update the data
     fetchExpensesForDate(response.data.date);
-
+    fetchBalance();
   } catch (error) {
     console.error('Error saving edited expense:', error);
   }
@@ -183,18 +186,22 @@ const handleExpenseDeleted = () => {
   fetchBalance();
 };
 
-const handleExpenseCreated = async (dateOnly) => {
+const handleExpenseCreated = async (date) => {
   try {
+    console.log('Handling expense creation for date:', date);
+
     // Fetch updated expense data
-    await fetchExpensesForDate(dateOnly);
+    await fetchExpensesForDate(date);
+    console.log('Expense data fetched successfully for date:', date);
 
     // Fetch and update the budget
     await fetchBalance();
+    console.log('Budget updated successfully.');
+
   } catch (error) {
     console.error('Error handling expense created:', error);
   }
 };
-
 
 const isToday = () => {
   const today = new Date();
@@ -203,6 +210,18 @@ const isToday = () => {
     currentDate.getMonth() === today.getMonth() &&
     currentDate.getFullYear() === today.getFullYear()
   );
+};
+
+const handlePreviousDayClick = () => {
+  const newDate = new Date(currentDate.getTime() - 86400000); // Subtract one day
+  setCurrentDate(newDate);
+  fetchBalance(); // Fetch the balance for the new date
+};
+
+const handleNextDayClick = () => {
+  const newDate = new Date(currentDate.getTime() + 86400000); // Add one day
+  setCurrentDate(newDate);
+  fetchBalance(); // Fetch the balance for the new date
 };
 
 const handleCalendarIconClick = () => {
@@ -222,7 +241,7 @@ const handleCalendarIconClick = () => {
           fontFamily: 'VCRODOMono', 
           fontWeight: 'bold'
         }} 
-        onClick={() => setCurrentDate(new Date(currentDate.getTime() - 86400000))}>
+        onClick={handlePreviousDayClick}>
         &lt; {/* This represents '<' */}
       </button>
       <button 
@@ -243,7 +262,7 @@ const handleCalendarIconClick = () => {
           fontFamily: 'VCRODOMono', 
           fontWeight: 'bold'
         }} 
-        onClick={() => setCurrentDate(new Date(currentDate.getTime() + 86400000))}>
+        onClick={handleNextDayClick}>
         &gt; {/* This represents '>' */}
       </button>
       <button
@@ -264,26 +283,38 @@ const handleCalendarIconClick = () => {
       </div>
       
       {errorMessages.length > 0 && (
-        <div className="error-message">{errorMessages[0]}</div>
-      )}
-      <div className="budget">
-      <Balance
-          currentDate={setCurrentDate}
-          currentBalance={currentBalance}
-          fetchBalance={fetchBalance}
-        />
+  <div className="error-message">{errorMessages[0]}</div>
+)}
+
+<div className="budget">
+  <Balance
+    currentDate={currentDate}
+    currentBalance={currentBalance}
+    fetchBalance={fetchBalance}
+  />
+</div>
+
+{/* Conditionally render the "Create New Expense" button */}
+{responseData.length === 0 || errorMessages.length > 0 ? (
+  currentBalance === null || currentBalance === 0 ? (
+    <div>
+      <p>Please add a budget first to create expenses.</p>
+      <Button onClick={() => window.location.href = "/budget"}>
+        Click here to add a budget
+      </Button>
     </div>
-      {/* Conditionally render the "Create New Expense" button */}
-      {responseData.length === 0 || errorMessages.length > 0 ? (
-        currentBalance === null || currentBalance === 0 ? (
-          <p>Please add a budget first to create expenses. <a href="/budget">Click here</a> </p>
-        ) : (
-          <CreateExpense
-           date={currentDate.toISOString().split('T')[0]}
-           subcategories={subcategories} 
-           handleExpenseCreated={handleExpenseCreated} />
-        )
-      ) : null}
+  ) : (
+    <CreateExpense
+      date={currentDate.toISOString().split('T')[0]}
+      subcategories={subcategories} 
+      handleExpenseCreated={(date) => {
+        handleExpenseCreated(date);
+        fetchBalance(); // Fetch the updated balance when an expense is created
+      }}
+    />
+  )
+) : null}
+
       <div className="table-responsive">
     {responseData.map((expense) => (
   <div key={expense.date}>

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 
 const AddExpense = ({ date, subcategories, onExpenseAdded  }) => {
-  const baseURL = "http://localhost:5050/api/users";
+  const baseURL = "https://gastos-ko-server.vercel.app/api/users";
   const [show, setShow] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
