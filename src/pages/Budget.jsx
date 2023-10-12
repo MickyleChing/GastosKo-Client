@@ -4,14 +4,12 @@ import Balance from '../components/Balance';
 import BudgetCategoryCard from '../components/BudgetCategoryCard';
 import { Modal, Button } from 'react-bootstrap';
 
-const baseURL = "http://localhost:5050/api/users";
+const baseURL = "https://gastos-ko-server.vercel.app/api/users";
 
 const Budget = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [currentBalance, setBalance] = useState(null);
   const [budgetPerCategory, setBudgetPerCategory] = useState(null);
   const [budget, setBudget] = useState(null);
-  const [reqData, setReqData] = useState({});
   const [isCreateModalVisible, setCreateModalVisible] = useState(false);
   const [newBudgetValue, setNewBudgetValue] = useState('');
 
@@ -64,47 +62,20 @@ const saveBudget = () => {
     setCreateModalVisible(false); // Hide the modal
     setNewBudgetValue(''); // Clear the input
     fetchBudget();
-    fetchBalance();
     })
     .catch((error) => {
       console.error(error);
     })
 };
 
-//Fetch Balance
-  const fetchBalance = async () => {
-    try {
-      const accessToken = localStorage.getItem("accessToken");
-      const formattedDate = currentDate.toISOString().split('T')[0].slice(0, 7); // Format date to YYYY-MM
-      const response = await axios.get(`${baseURL}/budget/${formattedDate}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      console.log(response.data);
-      setBalance(response.data);
-      setBudgetPerCategory(response.data.budgetPerCategory);
-      console.log(response.data.budgetPerCategory)
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  // Call fetchBalance only when the component mounts
-  useEffect(() => {
-    fetchBalance();
-  }, []); // Empty dependency array ensures it runs only once when mounted
-
-
   return (
     <div>
     <h1>Budget</h1>
     <div className="budget">
-      <Balance
-        currentDate={currentDate}
-        currentBalance={currentBalance}
-        fetchBalance={fetchBalance}
-      />
+    <Balance
+      currentDate={currentDate}
+      setBudgetPerCategory={setBudgetPerCategory} // Pass the function here
+    />
     </div>
     <div>
       {budget !== null ? (

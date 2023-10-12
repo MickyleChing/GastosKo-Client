@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 
-const CreateExpense = ({ date, subcategories, handleExpenseCreated  }) => {
-  const baseURL = "http://localhost:5050/api/users";
+const CreateExpense = ({ date, subcategories, handleExpenseCreated, fetchBalance  }) => {
+  const baseURL = "https://gastos-ko-server.vercel.app/api/users";
   const [show, setShow] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
@@ -78,21 +78,13 @@ const CreateExpense = ({ date, subcategories, handleExpenseCreated  }) => {
         });
         handleClose();
         handleExpenseCreated(response.data.date); // Trigger the update
-        console.log('handleExpenseCreated called.');
+        console.log("handleExpenseCreated:", response.data.date);
+  
       })
       .catch((error) => {
         console.error(error.response);
         alert(`${error.response.data.message}`);
       });
-  };
-  const formatDate = (date) => {
-    const options = {
-      year: 'numeric',
-      month: 'long', // Use 'long' for full month name
-      day: 'numeric',
-    };
-  
-    return date.toLocaleDateString(undefined, options);
   };
 
   return (

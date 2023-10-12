@@ -4,7 +4,7 @@ import { Button, Modal } from 'react-bootstrap';
 
 
 const DeleteExpense = ({ expenseId, onExpenseDeleted }) => {
-  const baseURL = "http://localhost:5050/api/users";
+  const baseURL = "https://gastos-ko-server.vercel.app/api/users";
   const [show, setShow] = useState(false);
   const [expense, setExpense] = useState(null);
 

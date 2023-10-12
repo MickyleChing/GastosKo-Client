@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card, Col, Row, Button } from 'react-bootstrap';
 import axios from 'axios';
 
-const baseURL = "http://localhost:5050/api/users";
+const baseURL = "https://gastos-ko-server.vercel.app/api/users";
 
 const BudgetCategoryCard = ({ setBudgetPerCategory = [], selectedDate  }) => {
 

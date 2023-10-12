@@ -12,7 +12,7 @@ import All from "./pages/All.jsx";
 import Budget from "./pages/Budget.jsx";
 import axios from "axios";
 
-const baseURL = "http://localhost:5050/api/users";
+const baseURL = "https://gastos-ko-server.vercel.app/api/users";
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);

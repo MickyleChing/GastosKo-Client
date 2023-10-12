@@ -6,7 +6,7 @@ import { useNavigate  } from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
 import RegistrationForm from '../components/RegisterForm';
 
-const baseURL = 'http://localhost:5050/api/users';
+const baseURL = 'https://gastos-ko-server.vercel.app/api/users';
 
 const LandingPage = () => {
   const initialFormData = {

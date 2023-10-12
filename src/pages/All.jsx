@@ -5,7 +5,7 @@ import ExpenseTableRow from '../components/ExpenseTableRow';
 import AddExpense from '../components/AddExpense';
 import Balance from '../components/Balance';
 
-const baseURL = "http://localhost:5050/api/users"
+const baseURL = "https://gastos-ko-server.vercel.app/api/users"
 const All = () => {
   const [responseData, setResponseData] = useState([]);
   const [isEditing, setIsEditing] = useState({});// State to track editing mode
