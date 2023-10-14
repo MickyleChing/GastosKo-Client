@@ -12,7 +12,8 @@ const Budget = () => {
   const [budget, setBudget] = useState(null);
   const [isCreateModalVisible, setCreateModalVisible] = useState(false);
   const [newBudgetValue, setNewBudgetValue] = useState('');
-
+  const [currentBalance, setBalance] = useState(null);
+  
 //Fetch Budget
   const fetchBudget = async() => {
     try{
@@ -35,6 +36,35 @@ const Budget = () => {
     fetchBudget();
   }, []);
 
+
+  const fetchBalance = async () => {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+      const formattedDate = currentDate.toISOString().split('T')[0].slice(0, 7);
+      const response = await axios.get(`${baseURL}/budget/${formattedDate}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      setBalance(response.data.currentBalance);
+      console.log("Current Balance: ", response.data.currentBalance);
+      setBudgetPerCategory(response.data.budgetPerCategory);
+    } catch (error) {
+      console.error(error);
+      if (error.response && error.response.status === 404) {
+        // Handle the 404 error here, for example, set currentBalance to null
+        setBalance(null);
+      } else {
+        console.error('An error occurred while fetching the balance:', error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    // Fetch the balance when the component mounts
+    fetchBalance();
+  }, [currentDate]);
+
 //Create Budget
 const createBudget = () => {
   setCreateModalVisible(true); // Show the modal
@@ -43,6 +73,11 @@ const createBudget = () => {
 const closeBudgetModal = () => {
   setCreateModalVisible(false);
   setNewBudgetValue(''); // Clear the input
+};
+
+const refreshBalance = () => {
+  // Call this function to refresh the balance
+  fetchBalance();
 };
 
 // Save the budget with the entered value
@@ -62,11 +97,14 @@ const saveBudget = () => {
     setCreateModalVisible(false); // Hide the modal
     setNewBudgetValue(''); // Clear the input
     fetchBudget();
+    setBudgetPerCategory(response.data.budgetPerCategory);
+    refreshBalance();
     })
     .catch((error) => {
       console.error(error);
     })
 };
+
 
   return (
     <div>
@@ -74,7 +112,8 @@ const saveBudget = () => {
     <div className="budget">
     <Balance
       currentDate={currentDate}
-      setBudgetPerCategory={setBudgetPerCategory} // Pass the function here
+      setBudgetPerCategory={setBudgetPerCategory} 
+      refreshBalance={refreshBalance}
     />
     </div>
     <div>
