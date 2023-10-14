@@ -53,8 +53,8 @@ const Settings = () => {
       // Clear the input field and error messages
       setSubCategoryName('');
       setErrorMessages([]);
-      console.log(`${subCategoryName} SubCategory Successfuly Created in ${selectedCategory} Category`);
-      alert(`${subCategoryName} SubCategory Successfuly Created in ${selectedCategory} Category`);
+      console.log(`${subCategoryName} Subcategory Successfuly Created in ${selectedCategory} Category`);
+      alert(`${subCategoryName} Subcategory Successfuly Created in ${selectedCategory} Category`);
     } catch (error) {
       console.error(error.response.data);
       setErrorMessages([error.response.data.message]);

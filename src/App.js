@@ -17,7 +17,7 @@ const baseURL = "https://gastos-ko-server.vercel.app/api/users";
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
-
+  const [userId, setUserId] = useState(null);
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
 
@@ -31,6 +31,7 @@ function App() {
         .then((response) => {
           console.log("Token validation response:", response.data);
           setAuthenticated(true);
+          setUserId(response.data.userId);
         })
         .catch((error) => {
           console.error("Token validation failed", error);
@@ -107,7 +108,7 @@ function App() {
             path="/today"
             element={
               <Sidebar>
-                <Today />
+                <Today userId={userId} />
               </Sidebar>
             }
           />

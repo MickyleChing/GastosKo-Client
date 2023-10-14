@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const Balance = ({ currentDate, setBudgetPerCategory  }) => {
+const Balance = ({ currentDate, setBudgetPerCategory, fetchBalance  }) => {
   const [currentBalance, setBalance] = useState(null);
   const baseURL = "https://gastos-ko-server.vercel.app/api/users";
 
@@ -15,8 +15,9 @@ const Balance = ({ currentDate, setBudgetPerCategory  }) => {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-        setBalance(response.data);
-        setBudgetPerCategory(response.data.budgetPerCategory);
+        setBalance(response.data.currentBalance);
+        console.log("Current Balance: ", response.data.currentBalance);
+        
       } catch (error) {
         console.error(error);
         if (error.response && error.response.status === 404) {
@@ -29,14 +30,14 @@ const Balance = ({ currentDate, setBudgetPerCategory  }) => {
     };
 
     fetchBalance();
-  }, [currentDate]);
+  }, [currentDate, fetchBalance]);
 
   return (
     <div className="balance">
       <div className="current-balance-container">
         <p className="balance-title">Current Balance</p>
         {currentBalance !== null ? (
-          <p className="balance-amount">{currentBalance.currentBalance}</p>
+          <p className="balance-amount">{currentBalance}</p>
         ) : (
           <p className="balance-amount">No budget found</p>
         )}

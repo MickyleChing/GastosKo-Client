@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 
-const CreateExpense = ({ date, subcategories, handleExpenseCreated, fetchBalance  }) => {
+const CreateExpense = ({ date, subcategories, handleExpenseCreated, fetchBalance, userId  }) => {
   const baseURL = "https://gastos-ko-server.vercel.app/api/users";
   const [show, setShow] = useState(false);
   const [formData, setFormData] = useState({
@@ -49,7 +49,8 @@ const CreateExpense = ({ date, subcategories, handleExpenseCreated, fetchBalance
   
     const accessToken = localStorage.getItem('accessToken');
     const requestData = {
-      date: date, 
+      user: userId, 
+      date: date,
       expenses: [
         {
           subCategoryName: formData.subCategoryName,
@@ -78,6 +79,7 @@ const CreateExpense = ({ date, subcategories, handleExpenseCreated, fetchBalance
         });
         handleClose();
         handleExpenseCreated(response.data.date); // Trigger the update
+        fetchBalance();
         console.log("handleExpenseCreated:", response.data.date);
   
       })
