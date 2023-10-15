@@ -4,6 +4,7 @@ import {Table} from "react-bootstrap";
 import ExpenseTableRow from '../components/ExpenseTableRow';
 import AddExpense from '../components/AddExpense';
 import Balance from '../components/Balance';
+import ReactPaginate from 'react-paginate';
 
 const baseURL = "https://gastos-ko-server.vercel.app/api/users"
 const All = () => {
@@ -16,6 +17,17 @@ const All = () => {
   const [errorMessages, setErrorMessages] = useState([]);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [currentBalance, setBalance] = useState(null);
+  const itemsPerPage = 5; // Number of tables to display per page
+  const [currentPage, setCurrentPage] = useState(0); // To keep track of the current page
+
+
+  // Calculate the total number of pages
+  const totalPages = Math.ceil(responseData.length / itemsPerPage);
+
+  // Function to handle page change
+  const handlePageChange = ({ selected }) => {
+    setCurrentPage(selected);
+  };
 
   const fetchBalance = async () => {
     try {
@@ -179,7 +191,7 @@ const handleExpenseDeleted = () => {
         />
     </div>
     <div className="table-responsive">
-    {responseData.map((expense) => (
+    {responseData.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage).map((expense, index) => (
   <div key={expense.date}>
     <h4>Date: {new Date(expense.date).toLocaleDateString()}</h4>
     <Table className="table-no-stripes" bordered hover style={{  borderCollapse: 'collapse', borderSpacing: '0px 4px'}}>
@@ -220,6 +232,15 @@ const handleExpenseDeleted = () => {
     </Table>
   </div>
 ))}
+  {/* Pagination component */}
+  <ReactPaginate
+        pageCount={totalPages}
+        pageRangeDisplayed={5}
+        marginPagesDisplayed={2}
+        onPageChange={handlePageChange}
+        containerClassName={'pagination'}
+        activeClassName={'active'}
+      />
     </div>
   </div>
   )

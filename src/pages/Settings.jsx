@@ -62,7 +62,7 @@ const Settings = () => {
   };
 
   return (
-    <div>
+    <div style={{ margin: '20px' }}>
       <h1>Settings</h1>
       <div className="category">
         <h4>Category Settings</h4>

@@ -107,7 +107,7 @@ const saveBudget = () => {
 
 
   return (
-    <div>
+    <div style={{ margin: '20px' }}>
     <h1>Budget</h1>
     <div className="budget">
     <Balance
