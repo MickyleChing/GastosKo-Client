@@ -2,7 +2,7 @@ import React from 'react'
 
 const Dashboard = () => {
   return (
-    <div>
+    <div style={{ margin: '20px' }}>
       <h1>Dashboard Page</h1>
     </div>
   )

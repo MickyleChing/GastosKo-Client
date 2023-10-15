@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 
-const CreateExpense = ({ date, subcategories, handleExpenseCreated, fetchBalance, userId  }) => {
+const CreateExpense = ({ date, subcategories, handleExpenseCreated, userId  }) => {
   const baseURL = "https://gastos-ko-server.vercel.app/api/users";
   const [show, setShow] = useState(false);
   const [formData, setFormData] = useState({
@@ -63,12 +63,14 @@ const CreateExpense = ({ date, subcategories, handleExpenseCreated, fetchBalance
     };
   
     axios
-      .post(`${baseURL}/expenses`, requestData, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      .then((response) => {
+    .post(`${baseURL}/expenses`, requestData, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    .then((response) => {
+      if (response && response.data) {
+        // Check if response and response.data are defined
         console.log(response.data);
         setFormData({
           title: '',
@@ -79,14 +81,23 @@ const CreateExpense = ({ date, subcategories, handleExpenseCreated, fetchBalance
         });
         handleClose();
         handleExpenseCreated(response.data.date); // Trigger the update
-        fetchBalance();
         console.log("handleExpenseCreated:", response.data.date);
+      } else {
+        console.error('Received an unexpected response:', response);
+        // Handle the case where response or response.data is undefined
+        alert("An unexpected error occurred while creating the expense.");
+      }
+    })
+    .catch((error) => {
+      if (error.response && error.response.data && error.response.data.message) {
+        console.log(error.response);
+        alert(error.response.data.message);
+      } else {
+        console.error('An error occurred while creating the expense:', error);
+        alert("An unexpected error occurred while creating the expense.");
+      }
+    });
   
-      })
-      .catch((error) => {
-        console.error(error.response);
-        alert(`${error.response.data.message}`);
-      });
   };
 
   return (
