@@ -414,3 +414,156 @@ p{
   font-weight: bold;
   justify-content: center;
 }
+/*media queries*/
+@media only screen and (max-width: 1280px){
+  .register{
+  .login-description-container{
+    height: 739px;
+    width: 378px;
+  }
+  .title-register{
+    font-size: 3rem;
+  }
+  .register-title{
+    font-size: 2rem;
+  }
+  .login-content-container{
+    margin-top: 85px;
+  }
+  .register-forms{
+    height: 50px;
+    width: 378px;
+  }
+}
+}
+
+@media only screen and (max-width: 992px){
+
+  .landing-description{
+      margin-left: 25px !important;
+      margin-right: 25px !important;
+    .title{
+      font-size: 2rem;
+      margin-right: 20px;
+      line-height: 75px;
+    }
+    .title-description{
+      font-size: 1.5rem;
+      text-align: left;
+    }
+  }
+  .register{
+    flex-direction: column;
+    
+  .login-container {
+    height: 523px;
+    border-radius: 30px 30px 0 0;
+    margin-top: 20px;
+  }
+  .login-description-container{
+    height: 369px;
+    width: 530px
+  }
+  .login-description{
+    margin: 24px;
+  }
+  .title-register{
+    font-size: 2rem;
+  }
+  .register-title{
+    font-size: 2rem;
+  }
+  .login-content-container{
+    margin-top: 85px;
+  }
+  .register-forms{
+    height: 50px;
+  }
+  .register-button{
+    height: 44px;
+    width: 112px;
+  }
+  .register-container{
+    height: 523px;
+    border-radius: 0 0 30px 30px;
+    margin-bottom: 20px;
+  }
+}
+}
+
+@media only screen and (max-width: 600px){
+    .landing-description {
+      margin-left: 15px !important;
+      margin-right: 15px !important;
+    }
+    .landing-container .title {
+      font-size: 2em;
+      line-height: 50px;
+    }
+    .landing-container .title-description {
+      font-size: 1.2rem;
+    }
+  
+    
+  .register{
+    .login-container{
+      width: 490px;
+    }
+    .login-description-container{
+      width: 455px;
+      height:346px;
+    }
+    .register-container{
+      width: 490px;
+    }
+    .register-forms{
+      height:40px;
+      font-size: 1.2rem;
+    }
+    .register-button{
+      font-size: 1.2rem;
+    }
+    
+  }
+}
+@media only screen and (max-width: 480px){
+  .landing-description {
+    margin-left: 8px !important;
+    margin-right: 8px !important;
+  }
+  .landing-container .title {
+    font-size: 1.5rem;
+    line-height: 35px;
+  }
+  .landing-container .title-description {
+    font-size: 1rem;
+  }
+
+  .register{
+    .login-container{
+      width: 355px;
+    }
+    .login-description-container{
+      width: 315px;
+      height:255px;
+    }
+    .register-container{
+      width: 355px;
+    }
+    .register-forms{
+      height:35px;
+      font-size: 1.2rem;
+      width: 300px;
+    }
+    .title-register{
+      font-size: 1.4rem;
+    }
+    .login-content-container{
+      margin-top: 54px;
+    }
+  .register-button{
+    font-size: 1.2rem;
+  }
+  
+}
+}

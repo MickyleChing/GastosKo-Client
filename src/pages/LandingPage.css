@@ -38,7 +38,7 @@
 }
 .title-description{
     color: #000;
-    text-align: justify;
+    text-align: left;
     font-family: Roboto Condensed;
     font-size: 1.5rem;
     font-style: normal;
@@ -91,7 +91,7 @@ form{
 }
 .login-description-container{
     height: 739px;
-    width: 534px;
+    width: 500px;
     background-color: #00693E;
     border-radius: 15px;
     align-items: center;
@@ -120,7 +120,7 @@ form{
     border-radius: 12px;
     color: #000;
     text-decoration: none;
-    width: 509.542px;
+    width: 475px;
     height: 70px;
     border-radius: 12px;
     padding-left: 50px; 
