@@ -51,69 +51,17 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        {authenticated && (
-          <Route
-            path="/dashboard"
-            element={
-              <Sidebar>
-                <Dashboard />
-              </Sidebar>
-            }
-          />
-        )}
-        {authenticated && (
-          <Route
-            path="/account"
-            element={
-              <Sidebar>
-                <Account />
-              </Sidebar>
-            }
-          />
-        )}
-        {authenticated && (
-          <Route
-            path="/all"
-            element={
-              <Sidebar>
-                <All />
-              </Sidebar>
-            }
-          />
-        )}
-        {authenticated && (
-          <Route
-            path="/budget"
-            element={
-              <Sidebar>
-                <Budget />
-              </Sidebar>
-            }
-          />
-        )}
-        {authenticated && (
-          <Route
-            path="/settings"
-            element={
-              <Sidebar>
-                <Settings />
-              </Sidebar>
-            }
-          />
-        )}
-        {authenticated && (
-          <Route
-            path="/today"
-            element={
-              <Sidebar>
-                <Today userId={userId} />
-              </Sidebar>
-            }
-          />
-        )}
-      </Routes>
+      <Sidebar authenticated={authenticated}>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/all" element={<All />} />
+          <Route path="/budget" element={<Budget />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/today" element={<Today userId={userId} />} />
+        </Routes>
+      </Sidebar>
     </BrowserRouter>
   );
 }
