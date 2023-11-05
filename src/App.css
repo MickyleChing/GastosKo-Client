@@ -27,7 +27,9 @@ main{
     width: 200px;
     transition: all 0.5s ease-in-out;
     border-radius: 0 7px 7px 0;
+    
 }
+
 .top_section{
     display: flex;
     align-items: center;
@@ -42,21 +44,29 @@ main{
     font-size: 25px;
     margin-left: 50px;
 }
-.link{
-    font-family: "VCRODOMono", monospace;
-    display: flex; 
-    color:#0D0D0D;
-    padding: 10px 15px;
-    gap: 15px;
-    transition: all 0.5s ease-in-out;
-    text-decoration: none;
+.link, .bottom-link {
+  font-family: "VCRODOMono", monospace;
+  display: flex;
+  color: #0D0D0D;
+  padding: 10px 15px;
+  gap: 15px;
+  transition: all 0.5s ease-in-out;
+  text-decoration: none;
 }
-.link:hover{  
-    background-color:  #12312B;
-    color:#D7D7D7;
-    transition: all 0.5s;
-    border-radius: 7px;
+
+.bottom-link {
+  position: absolute;
+  bottom: 0;
+  
 }
+
+.link:hover, .bottom-link:hover {
+  background-color: #12312B;
+  color: #D7D7D7;
+  transition: all 0.5s;
+  border-radius: 7px;
+}
+
 .active{
     background-color: #12312B;
     color:#D7D7D7;

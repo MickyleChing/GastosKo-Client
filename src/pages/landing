@@ -7,7 +7,7 @@ import FormLabel from 'react-bootstrap/FormLabel'
 import { FaUser, FaEnvelope, FaLock } from 'react-icons/fa6';
 import axios from "axios";
 
-const baseURL = 'http://localhost:5050/api/users';
+const baseURL = 'https://gastos-ko-server.vercel.app/api/users';
 const LandingPage = () => {
   const initialFormData = {
     username: '',
