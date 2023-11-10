@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
+import Select from 'react-select';
 
-const AddExpense = ({ date, subcategories, onExpenseAdded  }) => {
+
+const AddExpense = ({ date, subcategories, onExpenseAdded, category  }) => {
   const baseURL = "https://gastos-ko-server.vercel.app/api/users";
   const [show, setShow] = useState(false);
   const [formData, setFormData] = useState({
@@ -11,6 +13,15 @@ const AddExpense = ({ date, subcategories, onExpenseAdded  }) => {
     quantity: '',
     amount: '',
     description: '',
+  });
+
+  const subcategoriesByCategory = {};
+
+  subcategories.forEach((subcategory) => {
+    if (!subcategoriesByCategory[subcategory.categoryName]) {
+      subcategoriesByCategory[subcategory.categoryName] = [];
+    }
+    subcategoriesByCategory[subcategory.categoryName].push(subcategory);
   });
 
   const handleClose = () => setShow(false);
@@ -94,23 +105,40 @@ const AddExpense = ({ date, subcategories, onExpenseAdded  }) => {
                 onChange={handleInputChange}
               />
             </Form.Group>
-            
-            <Form.Group className="mb-3" controlId="subcategory">
-                <Form.Label>Subcategory</Form.Label>
-                <Form.Control
-                    as="select" // Use select for dropdown
-                    name="subCategoryName"
-                    value={formData.subCategoryName}
-                    onChange={handleInputChange}
-                >
-                    <option value="">Select a subcategory</option>
-                    {subcategories.map((subcategory) => (
-                    <option key={subcategory._id} value={subcategory.subCategoryName}>
-                        {subcategory.subCategoryName}
-                    </option>
-                    ))}
-                </Form.Control>
-            </Form.Group>
+
+            <label>Subcategory</label>
+            <Select
+              className="select-search"
+              name="subCategoryName"
+              placeholder="Select a subcategory"
+              value={
+                formData.subCategoryName
+                  ? { value: formData.subCategoryName, label: formData.subCategoryName }
+                  : null
+              }
+              onChange={(selectedOption) => {
+                handleInputChange({
+                  target: {
+                    name: 'subCategoryName',
+                    value: selectedOption ? selectedOption.value : '',
+                  },
+                });
+              }}
+              options={Object.keys(subcategoriesByCategory).reduce(
+                (options, categoryName) => [
+                  ...options,
+              
+                  {
+                    label: categoryName,
+                    options: subcategoriesByCategory[categoryName].map((subcategory) => ({
+                      value: subcategory.subCategoryName,
+                      label: subcategory.subCategoryName,
+                    })),
+                  },
+                ],
+                []
+              )}
+            />
 
             <Form.Group className="mb-3" controlId="category">
               <Form.Label>Category</Form.Label>

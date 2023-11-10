@@ -120,6 +120,7 @@ const saveBudget = () => {
       {budget !== null ? (
         <div>
           <p>Your budget this month: {budget.budget}</p>
+          <p>Your Savings this month: {budget.savings}</p>
           {/* Render other budget-related information */}
         </div>
       ) : (

@@ -142,6 +142,10 @@ tr {
     align-content: center;
     justify-content: center;
 }
+.select-search{
+  font-family: "VCRODOMono";
+  margin-bottom: 16px;
+}
 /* edit forms */
 .edit-form{
   display: flex;
@@ -423,6 +427,11 @@ p{
   display: flex;
   font-weight: bold;
   justify-content: center;
+}
+/*charts*/
+.doughnut{
+  height: 250px !important;
+  width: 250px !important;
 }
 /*media queries*/
 @media only screen and (max-width: 1280px){
