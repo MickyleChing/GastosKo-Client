@@ -59,6 +59,7 @@ const BudgetCategoryCard = ({ setBudgetPerCategory = [], selectedDate  }) => {
     } catch (error) {
       // Handle errors here (e.g., show an error message to the user)
       console.error('Error updating budget:', error);
+      alert(error.response.data.message);
     }
   };
 
