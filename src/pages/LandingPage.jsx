@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useNavigate  } from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
 import RegistrationForm from '../components/RegisterForm';
+import { GoogleLogin } from '@react-oauth/google';
 
 const baseURL = 'https://gastos-ko-server.vercel.app/api/users';
 
@@ -82,7 +83,32 @@ const LandingPage = () => {
     })
   }
 
+  //Login using Gmail
+   const responseGoogle = (response) => {
+    const tokenId = response.credential;
+
+    axios.post(`${baseURL}/googlelogin`, { tokenId })
+      .then((response) => {
+        if (response.data.accessToken) {
+          const { accessToken } = response.data;
+          console.log("Access Token: ", accessToken);
+          localStorage.setItem("accessToken", accessToken);
+          navigate('/dashboard');
+        } else {
+          console.error("Login failed: No access token received");
+          setErrorMessages('Login failed: No access token received');
+        }
+      })
+      .catch((error) => {
+        console.error("Login failed", error);
+        setErrorMessages(`${error.response.data.message}`);
+      });
+ 
+  };
+
+
   return (
+
     <div>
       <div className="landing-description">
         <div className="landing-container">
@@ -107,13 +133,19 @@ const LandingPage = () => {
             <div className="login-description">
               <h1 className="title-register">Track Your Expenses with GastosKo</h1>
               <div className="login-content-container">
-                <h4>
+                <h4 className="isregistering">
                 {isRegistering ? 'Already have an Account?' : 'Dont Have an Account'}
                 </h4>
                 <br />
                 <h4 className="login-link" onClick={toggleForm}>
                   {isRegistering ? 'Login' : 'Register'}
                 </h4>
+                <h6 className="or">or</h6>     
+                <GoogleLogin
+                onSuccess={responseGoogle}
+                onError={(error) => console.error(error)}
+                buttonText="Login with Google"
+              />
               </div>
             </div>
           </div>
@@ -146,6 +178,7 @@ const LandingPage = () => {
       </div>
       </div>
     </div>
+   
   );
 };
 

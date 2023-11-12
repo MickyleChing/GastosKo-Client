@@ -111,10 +111,12 @@ form{
     text-transform: capitalize;
 }
 .login-content-container{
-    margin-top:200px;
+    margin-top:75px;
     align-content: center;
     align-items: center;
     text-align: center;
+    display: flex;
+    flex-direction: column;
 }
 .register-forms{
     border-radius: 12px;
@@ -148,7 +150,11 @@ form{
 .login-link:hover{
     cursor: pointer;
 }
+.login{
+    display: flex;
+}
 h4{
+    margin-top: 8px;
     font-family: VCRODOMono;
     font-size: 1rem;
 }

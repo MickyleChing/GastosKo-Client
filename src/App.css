@@ -447,7 +447,7 @@ p{
     font-size: 2rem;
   }
   .login-content-container{
-    margin-top: 85px;
+    margin-top: 20px;
   }
   .register-forms{
     height: 50px;
@@ -487,13 +487,22 @@ p{
     margin: 24px;
   }
   .title-register{
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
   .register-title{
     font-size: 2rem;
   }
   .login-content-container{
-    margin-top: 85px;
+    margin-top: 20px;
+  }
+  .h4{
+    margin-top: 4px;
+  }
+  .login-link{
+    font-size: 1.2rem;
+  }
+  .isregistering{
+    margin: 0;
   }
   .register-forms{
     height: 50px;
@@ -564,7 +573,7 @@ p{
     }
     .login-description-container{
       width: 315px;
-      height:255px;
+      height:305px;
     }
     .register-container{
       width: 355px;
@@ -575,10 +584,26 @@ p{
       width: 300px;
     }
     .title-register{
-      font-size: 1.4rem;
+      font-size: 1.2rem;
     }
     .login-content-container{
-      margin-top: 54px;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: stretch;
+      justify-content: space-evenly;
+    }
+    .login-link{
+      font-size: 1rem;
+    }
+    .or{
+      margin: 2px 0;
+      flex-basis: 100%;
+    }
+    .isregistering{
+      flex-basis: 100%;
+      font-size: .8rem;
     }
   .register-button{
     font-size: 1.2rem;
