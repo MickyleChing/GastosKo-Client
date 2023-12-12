@@ -6,8 +6,6 @@ const DonutChart = ({ userExpenses, currentBalance, selectedMonth }) => {
   const chartRef = useRef(null);
   const [displaySubcategories, setDisplaySubcategories] = useState(true);
 
-
-  
   // Function to generate datasets and labels from userExpenses
   const generateChartData = () => {
     const combinedData = {};
@@ -91,13 +89,20 @@ const DonutChart = ({ userExpenses, currentBalance, selectedMonth }) => {
   const handleSwitch = () => {
     setDisplaySubcategories((prev) => !prev);
   };
+  
   return (
+    <>
+    <div className="switch-btn">
+    <Button onClick={handleSwitch}>
+    {displaySubcategories ? 'Switch to Category' : 'Switch to Subcategory'}
+    </Button>
+    </div>
+    <div className="category-chart">
     <div style={{ width: '300px', height: '300px' }}>
-      <Button onClick={handleSwitch}>
-      {displaySubcategories ? 'Switch to Category' : 'Switch to Subcategory'}
-      </Button>
       <canvas ref={chartRef}></canvas>
     </div>
+    </div>
+    </>
   );
 };
 

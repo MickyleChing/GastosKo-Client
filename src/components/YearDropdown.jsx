@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const YearMonthDropdown = ({ selectedYear, selectedMonth, onYearMonthChange }) => {
   const currentYear = new Date().getFullYear();
@@ -14,7 +14,7 @@ const YearMonthDropdown = ({ selectedYear, selectedMonth, onYearMonthChange }) =
   };
 
   return (
-    <div>
+    <div className='year-month'>
       <label>Year:</label>
       <select value={selectedYear} onChange={handleYearChange}>
         {years.map((year) => (

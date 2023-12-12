@@ -76,22 +76,17 @@ main{
  font-size: 20px;
 }
 /* Tables */
-.table-no-stripes{
-  border-collapse: separate;
-  border-spacing: 0 15px;
-}
-.table-no-stripes tbody tr:nth-child(odd) {
-    background-color: transparent; /* Remove background color for odd rows */
-  }
-  
-  .table-no-stripes tbody tr:nth-child(even) {
-    background-color: transparent; /* Remove background color for even rows */
-  }
 tbody{
     display: contents;
 }
-Table{
-  border-collapse: collapse !important ;
+.table-css{
+  background-color: #BFBFBF !important;
+}
+.table {
+  border-color: #dee2e600;
+  background-color: #BFBFBF !important;
+  --bs-table-bg: transparent;
+  border-radius: 10px;
 }
 input {
     font-size: 16px;
@@ -106,26 +101,20 @@ select{
     padding: 10px 10px;
 }
 tr {
-    background-color: #f5f5f5; 
     text-align: center;
     align-items: center;
     font-family: "VCRODOMono";
   }
-  
- 
-  tr:nth-child(even) {
-    background-color: #e0e0e0;
+  .dropdown-toggle::after{
+   color: transparent !important;
   }
-  
  
   th {
-    background-color: #333;
     color: white; 
     font-family: "VCRODOMono";
   }
-  
 
-  td {
+  td{
     padding: 8px;
     text-align: center;
     font-family: "VCRODOMono";
@@ -135,17 +124,19 @@ tr {
   tfoot tr {
     font-weight: bold; 
   }
+
 .date-pagination{
     display: flex;
-   
     gap: 20px;
     align-content: center;
     justify-content: center;
 }
+
 .select-search{
   font-family: "VCRODOMono";
   margin-bottom: 16px;
 }
+
 /* edit forms */
 .edit-form{
   display: flex;
@@ -428,10 +419,32 @@ p{
   font-weight: bold;
   justify-content: center;
 }
+/*Dashboard*/
+.year-month{
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 20px;
+}
+.year-month-btn{
+  display: flex;
+  justify-content: center;
+}
+.switch-btn{
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+}
 /*charts*/
 .doughnut{
   height: 250px !important;
   width: 250px !important;
+}
+.donut-chart{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 /*media queries*/
 @media only screen and (max-width: 1280px){
@@ -531,8 +544,10 @@ p{
     .landing-container .title-description {
       font-size: 1.2rem;
     }
-  
-    
+    .donut-chart{
+      display: flex;
+      justify-content: center;
+    }
   .register{
     .login-container{
       width: 490px;
@@ -566,7 +581,10 @@ p{
   .landing-container .title-description {
     font-size: 1rem;
   }
-
+  .year-month-btn{
+    font-size: .8rem;
+  }
+ 
   .register{
     .login-container{
       width: 355px;
@@ -608,6 +626,6 @@ p{
   .register-button{
     font-size: 1.2rem;
   }
-  
+ 
 }
 }

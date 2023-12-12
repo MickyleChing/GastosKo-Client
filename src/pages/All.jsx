@@ -161,16 +161,17 @@ const handleSaveClick = async (expenseId) => {
     console.error('Error saving edited expense:', error);
   }
 };
+
 const handleExpenseAdded = () => {
   // Fetch updated budget data after adding an expense
   fetchBalance(); // This should trigger a fetch of the updated budget
   fetchAllExpenses(); // This should fetch updated expense data
 };
+
 const handleExpenseDeleted = () => {
   fetchBalance(); 
   fetchAllExpenses(); 
 };
-
 
   return (
     <div style={{ margin: '20px' }}>
@@ -191,49 +192,51 @@ const handleExpenseDeleted = () => {
         />
     </div>
     <div className="table-responsive">
-    {responseData.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage).map((expense, index) => (
-  <div key={expense.date}>
-    <h4>Date: {new Date(expense.date).toLocaleDateString()}</h4>
-    <Table className="table-no-stripes" bordered hover style={{  borderCollapse: 'collapse', borderSpacing: '0px 4px'}}>
-      <thead>
-        <tr>
-          <th className="center-header">Title</th>
-          <th className="center-header">Category</th>
-          <th className="center-header">Subcategory</th>
-          <th className="center-header">Quantity</th>
-          <th className="center-header">Amount</th>
-          <th className="center-header">Total</th>
-          <th className="center-header">Description</th>
-          <th className="center-header"></th>
-        </tr>
-      </thead>
-      <tbody >
-        <AddExpense date={expense.date} subcategories={subcategories} onExpenseAdded={handleExpenseAdded} className="add-expense-button"/>
-        <ExpenseTableRow
-          key={expense._id}
-          expense={expense}
-          isEditing={isEditing}
-          editedData={editedData}
-          selectedSubcategory={selectedSubcategory}
-          handleInputChange={handleInputChange}
-          handleSaveClick={handleSaveClick}
-          handleEditClick={handleEditClick}
-          subcategories={subcategories}
-          setSelectedSubcategory={setSelectedSubcategory}
-          updateTableData={updateTableData}
-          onExpenseDeleted={handleExpenseDeleted} 
-        />
-      </tbody>
-      <tfoot>
-        <tr style={{ textAlign: 'center' }}>
-          <td colSpan="8">Total: {expense.totalAmountInArray}</td>
-       </tr>
-      </tfoot>
-    </Table>
-  </div>
-))}
-  {/* Pagination component */}
-  <ReactPaginate
+    {responseData.sort((a, b) => new Date(b.date) - new Date(a.date))
+      .slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
+      .map((expense, index) => ( 
+      <div key={expense.date}>
+        <h4>Date: {new Date(expense.date).toLocaleDateString()}</h4>
+        <Table className="table-no-stripes" bordered hover style={{  borderCollapse: 'collapse', borderSpacing: '0px 4px'}}>
+          <thead>
+            <tr>
+              <th className="center-header">Title</th>
+              <th className="center-header">Category</th>
+              <th className="center-header">Subcategory</th>
+              <th className="center-header">Quantity</th>
+              <th className="center-header">Amount</th>
+              <th className="center-header">Total</th>
+              <th className="center-header">Description</th>
+              <th className="center-header"></th>
+            </tr>
+          </thead>
+          <tbody >
+            <AddExpense date={expense.date} subcategories={subcategories} onExpenseAdded={handleExpenseAdded} className="add-expense-button"/>
+            <ExpenseTableRow
+              key={expense._id}
+              expense={expense}
+              isEditing={isEditing}
+              editedData={editedData}
+              selectedSubcategory={selectedSubcategory}
+              handleInputChange={handleInputChange}
+              handleSaveClick={handleSaveClick}
+              handleEditClick={handleEditClick}
+              subcategories={subcategories}
+              setSelectedSubcategory={setSelectedSubcategory}
+              updateTableData={updateTableData}
+              onExpenseDeleted={handleExpenseDeleted} 
+            />
+          </tbody>
+          <tfoot>
+            <tr style={{ textAlign: 'center' }}>
+              <td colSpan="8">Total: {expense.totalAmountInArray}</td>
+          </tr>
+          </tfoot>
+        </Table>
+      </div>
+    ))}
+
+     <ReactPaginate
         pageCount={totalPages}
         pageRangeDisplayed={5}
         marginPagesDisplayed={2}

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import DonutChart from '../components/charts/DonutChart';
 import axios from 'axios';
-import Calendar from 'react-datepicker';
 import YearMonthDropdown  from '../components/YearDropdown';
-import { Table } from 'react-bootstrap';
+import DonutChartByCategories from '../components/charts/DonutChartByCategories';
 
 const baseURL = "https://gastos-ko-server.vercel.app/api/users";
 
@@ -16,7 +15,6 @@ const Dashboard = () => {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
   const [errorMessages, setErrorMessages] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
   const [budget, setBudget] = useState(0);
 
   const fetchAllExpensesPerMonth = async () => {
@@ -69,7 +67,7 @@ const Dashboard = () => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-    console.log(`Budget:`, response.data.savings);
+    console.log(`Budget:`, response.data.budgetPerCategory);
     setBudget(response.data);
 
     // Clear any error messages if the request is successful
@@ -91,7 +89,7 @@ const Dashboard = () => {
 
 useEffect(() => {
   fetchBudget();
-}, []);
+}, [selectedYear, selectedMonth]);
 
   const handleYearMonthChange = (year, month) => {
     setSelectedYear(year);
@@ -106,47 +104,28 @@ useEffect(() => {
   return (
     <div style={{ margin: '20px' }}>
       <h1>Dashboard Page</h1>
+      <div className="year-month-btn">
       <YearMonthDropdown
         selectedYear={selectedYear}
         selectedMonth={selectedMonth}
         onYearMonthChange={handleYearMonthChange}
       />
+      </div>
       <DonutChart
         userExpenses={responseData.userExpenses}
         currentBalance={budget.currentBalance}
         selectedMonth={selectedMonth}
       />
+      <DonutChartByCategories
+        userExpenses={responseData.userExpenses}
+        currentBalance={budget.currentBalance}
+        selectedMonth={selectedMonth}
+        budget={budget.budgetPerCategory}
+      />
       {responseData.userExpenses.length === 0 && (
-        <p style={{ marginTop: "75px" }}>No expenses found for the selected period.</p>
+        <p style={{ marginTop: "25px" }}>No expenses found for the selected period.</p>
       )}
-      <h4 style={{ marginTop: "75px" }}>Total amount for {selectedYear} {selectedMonth}: {responseData.totalAmount}</h4>
-    {/* <h2 style={{ marginTop: "75px" }}>Expense List:</h2>
-      <Table>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Date</th>
-            <th>Category Name</th>
-            <th>Subcategory</th>
-            <th>Total</th>
-            <th>Total of the array</th>
-          </tr>
-        </thead>
-        <tbody>
-          {responseData.userExpenses.map((expense, index) => (
-            expense.expenses.map((expenseItem, subIndex) => (
-              <tr key={`${index}-${subIndex}`}>
-                <td>{expenseItem.title}</td>
-                <td>{expense.date}</td>
-                <td>{expenseItem.categoryName}</td>
-                <td>{expenseItem.subCategoryName}</td>
-                <td>{expenseItem.totalAmountInArray}</td>
-                <td>{expense.totalAmountInArray}</td>
-              </tr>
-            ))
-          ))}
-        </tbody>
-      </Table> */}
+      <h4 style={{ marginTop: "25px" }}>Total amount for {selectedYear} {selectedMonth}: {responseData.totalAmount}</h4>
     </div>
   );
 };
