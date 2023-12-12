@@ -67,7 +67,8 @@ const Budget = () => {
 
 //Create Budget
 const createBudget = () => {
-  setCreateModalVisible(true); // Show the modal
+  setCreateModalVisible(true); 
+  fetchBalance();
 };
 
 const closeBudgetModal = () => {
@@ -109,13 +110,16 @@ const saveBudget = () => {
   return (
     <div style={{ margin: '20px' }}>
     <h1>Budget</h1>
+    
     <div className="budget">
     <Balance
       currentDate={currentDate}
       setBudgetPerCategory={setBudgetPerCategory} 
       refreshBalance={refreshBalance}
+      fetchBalance={fetchBalance}
     />
     </div>
+
     <div>
       {budget !== null ? (
         <div>
@@ -130,6 +134,7 @@ const saveBudget = () => {
         </div>
       )}
     </div>
+
     <Modal show={isCreateModalVisible} onHide={closeBudgetModal}>
         <div className="modal-content">
           <Modal.Header closeButton>
@@ -155,7 +160,7 @@ const saveBudget = () => {
       </Modal>
 
     {budgetPerCategory !== null ? (
-      <BudgetCategoryCard setBudgetPerCategory={budgetPerCategory} selectedDate={currentDate} />
+      <BudgetCategoryCard setBudgetPerCategory={budgetPerCategory} selectedDate={currentDate}/>
     ) : (
       <p></p>
     )}

@@ -106,9 +106,7 @@ const LandingPage = () => {
  
   };
 
-
   return (
-
     <div>
       <div className="landing-description">
         <div className="landing-container">
