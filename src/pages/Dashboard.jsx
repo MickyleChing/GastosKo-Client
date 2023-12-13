@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Button } from 'react-bootstrap';
 import DonutChart from '../components/charts/DonutChart';
 import axios from 'axios';
 import YearMonthDropdown  from '../components/YearDropdown';
 import DonutChartByCategories from '../components/charts/DonutChartByCategories';
+import BarChart from '../components/charts/BarChart';
 
 const baseURL = "https://gastos-ko-server.vercel.app/api/users";
 
@@ -16,6 +18,7 @@ const Dashboard = () => {
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
   const [errorMessages, setErrorMessages] = useState([]);
   const [budget, setBudget] = useState(0);
+  const [displaySubcategories, setDisplaySubcategories] = useState(true);
 
   const fetchAllExpensesPerMonth = async () => {
     try {
@@ -101,9 +104,12 @@ useEffect(() => {
     fetchBudget();
   }, [currentDate, selectedYear, selectedMonth]);
 
+  const handleSwitch = () => {
+    setDisplaySubcategories((prev) => !prev);
+  };
+
   return (
     <div style={{ margin: '20px' }}>
-      <h1>Dashboard Page</h1>
       <div className="year-month-btn">
       <YearMonthDropdown
         selectedYear={selectedYear}
@@ -111,21 +117,37 @@ useEffect(() => {
         onYearMonthChange={handleYearMonthChange}
       />
       </div>
-      <DonutChart
-        userExpenses={responseData.userExpenses}
-        currentBalance={budget.currentBalance}
-        selectedMonth={selectedMonth}
-      />
+      {responseData.userExpenses.length === 0 && (
+        <p style={{ marginTop: "10px" }}>No expenses found for the selected period.</p>
+      )}
+      <h4 style={{ marginTop: "10px" }}>Total amount for {selectedYear} {selectedMonth}: {responseData.totalAmount}</h4>
       <DonutChartByCategories
         userExpenses={responseData.userExpenses}
         currentBalance={budget.currentBalance}
         selectedMonth={selectedMonth}
         budget={budget.budgetPerCategory}
       />
-      {responseData.userExpenses.length === 0 && (
-        <p style={{ marginTop: "25px" }}>No expenses found for the selected period.</p>
-      )}
-      <h4 style={{ marginTop: "25px" }}>Total amount for {selectedYear} {selectedMonth}: {responseData.totalAmount}</h4>
+      <div className="switch-btn">
+        <Button onClick={handleSwitch}>
+          {displaySubcategories ? 'Switch to Category' : 'Switch to Subcategory'}
+        </Button>
+      </div>
+      <div className="category-chart">
+      <DonutChart
+        userExpenses={responseData.userExpenses}
+        currentBalance={budget.currentBalance}
+        selectedMonth={selectedMonth}
+        displaySubcategories={displaySubcategories}
+        chartType="doughnut"
+      />
+      <BarChart
+        userExpenses={responseData.userExpenses}
+        currentBalance={budget.currentBalance}
+        selectedMonth={selectedMonth}
+        displaySubcategories={displaySubcategories}
+        chartType="bar"
+      />
+      </div>
     </div>
   );
 };
