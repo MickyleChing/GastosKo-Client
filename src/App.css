@@ -446,6 +446,19 @@ p{
   flex-wrap: wrap;
   justify-content: space-evenly;
 }
+.category-chart{
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.donut-category{
+  height: 400px;
+  width: 400px;
+}
+.bar-category canvas {
+  height: 400px !important;
+  width: 800px !important;
+}
 /*media queries*/
 @media only screen and (max-width: 1280px){
   .register{
@@ -483,6 +496,10 @@ p{
       font-size: 1.5rem;
       text-align: left;
     }
+  }
+  .bar-category canvas {
+    height: 250px !important;
+    width: 500px !important;
   }
   .register{
     flex-direction: column;
@@ -548,6 +565,15 @@ p{
       display: flex;
       justify-content: center;
     }
+    .category-chart{
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .bar-category canvas {
+      height: 200px !important;
+      width: 400px !important;
+    }
   .register{
     .login-container{
       width: 490px;
@@ -584,7 +610,19 @@ p{
   .year-month-btn{
     font-size: .8rem;
   }
- 
+  .category-chart{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .donut-category{
+    height: 250px;
+    width: 250px;
+  }
+  .bar-category canvas {
+    height: 150px !important;
+    width: 300px !important;
+  }
   .register{
     .login-container{
       width: 355px;

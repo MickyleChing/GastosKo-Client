@@ -1,20 +1,24 @@
 import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 
-const DonutChart = ({ userExpenses, currentBalance, selectedMonth, displaySubcategories, chartType }) => {
+const getLabel = (displaySubcategories) => {
+    return displaySubcategories ? 'Subcategory' : 'Category';
+  };
+  
+const BarChart = ({ userExpenses, currentBalance, selectedMonth, displaySubcategories }) => {
   const chartRef = useRef(null);
   const myChart = useRef(null);
 
   // Function to generate datasets and labels from userExpenses
   const generateChartData = () => {
     const combinedData = {};
-  
+
     userExpenses.forEach((expense) => {
       expense.expenses.forEach((expenseItem) => {
         const key = displaySubcategories
           ? `${expenseItem.categoryName}_${expenseItem.subCategoryName}`
           : `${expenseItem.categoryName}_${expenseItem.categoryName}`;
-  
+
         if (combinedData[key]) {
           combinedData[key].nested.value += expenseItem.totalAmountInArray;
         } else {
@@ -25,7 +29,7 @@ const DonutChart = ({ userExpenses, currentBalance, selectedMonth, displaySubcat
         }
       });
     });
-  
+
     // Include Current Balance in the combined data
     if (currentBalance && selectedMonth) {
       const currentBalanceKey = 'Current Balance';
@@ -34,42 +38,44 @@ const DonutChart = ({ userExpenses, currentBalance, selectedMonth, displaySubcat
         nested: { value: currentBalance },
       };
     }
-  
+
     // Sort the data by categoryName and then by subCategoryName
     const sortedData = Object.entries(combinedData)
       .sort(([aKey], [bKey]) => {
         const [aCategory, aSubCategory] = aKey.split('_');
         const [bCategory, bSubCategory] = bKey.split('_');
-  
+
         // First, sort by categoryName
         const categoryComparison = aCategory.localeCompare(bCategory);
-  
+
         // If category names are the same, sort by subCategoryName
         if (categoryComparison === 0) {
           return aSubCategory.localeCompare(bSubCategory);
         }
-  
+
         return categoryComparison;
       })
       .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
-  
+
     const datasets = [
       {
-        data: Object.values(sortedData),
+        data: Object.values(sortedData).map((data) => data.nested.value),
         backgroundColor: Object.keys(sortedData).map((key) => {
-          const [categoryName, subCategoryName] = key.split('_');
-          return getBackgroundColor(categoryName, subCategoryName);
-        }),
+            const [categoryName, subCategoryName] = key.split('_');
+            return getBackgroundColor(categoryName, subCategoryName);
+          }),
+        label: getLabel(displaySubcategories),
       },
     ];
-  
+
     const labels = Object.keys(sortedData).map((key) => {
       const [categoryName, subCategoryName] = key.split('_');
       return displaySubcategories ? subCategoryName || categoryName : categoryName;
     });
-  
+
     return { datasets, labels };
   };
+
   // Function to get background color based on index
   const getBackgroundColor = (categoryName, subCategoryName) => {
     const colorMap = {
@@ -79,9 +85,6 @@ const DonutChart = ({ userExpenses, currentBalance, selectedMonth, displaySubcat
       Entertainment: '#ff3300',
       Shop: '#ff9900',
     };
-  
-    // If subCategoryName is provided, use the color of categoryName
-    // Otherwise, use the color of subCategoryName
     const colorKey = subCategoryName = categoryName;
   
     return colorMap[colorKey] || '#BFBFBF';
@@ -95,14 +98,16 @@ const DonutChart = ({ userExpenses, currentBalance, selectedMonth, displaySubcat
       const { datasets, labels } = generateChartData();
 
       const cfg = {
-        type: 'doughnut',
+        type: 'bar',
         data: {
-          datasets,
           labels,
+          datasets,
         },
         options: {
-          parsing: {
-            key: 'nested.value',
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
           },
         },
       };
@@ -119,13 +124,11 @@ const DonutChart = ({ userExpenses, currentBalance, selectedMonth, displaySubcat
 
   return (
     <>
-    <div className="category-chart">
-    <div className="donut-category">
-      <canvas ref={chartRef}></canvas>
-    </div>
-    </div>
+        <div className="bar-category">
+          <canvas ref={chartRef}></canvas>
+        </div>
     </>
   );
 };
 
-export default DonutChart;
+export default BarChart;
